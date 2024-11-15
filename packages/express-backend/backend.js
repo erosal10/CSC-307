@@ -51,6 +51,46 @@ const users = {
     return user;
   };
 
+  const removeUserById = (id) => {
+    const index = users["users_list"].findIndex((user) => user["id"] === id);
+    if (index !== -1) {
+      users["users_list"].splice(index, 1); // Remove the user if found
+      return true;
+    }
+    return false;
+  };
+
+  const findUsersByNameAndJob = (name, job) => {
+    return users["users_list"].filter(
+      (user) => user["name"] === name && user["job"] === job
+    );
+  };
+
+
+  app.get("/users", (req, res) => {
+    const { name, job } = req.query;
+  
+    if (name && job) {
+      const result = findUsersByNameAndJob(name, job);
+      res.send({ users_list: result });
+    } else if (name) {
+      const result = findUserByName(name);
+      res.send({ users_list: result });
+    } else {
+      res.send(users); // Return the full list if no query params are specified
+    }
+  });
+
+  app.delete("/users/:id", (req, res) => {
+    const id = req.params.id;
+    const wasDeleted = removeUserById(id);
+    if (wasDeleted) {
+      res.status(200).send(); // Send an empty 200 response if deletion was successful
+    } else {
+      res.status(404).send("User not found."); // Send a 404 if the user was not found
+    }
+  });
+
   app.post("/users", (req, res) => {
     const userToAdd = req.body;
     addUser(userToAdd);
