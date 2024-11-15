@@ -1,15 +1,13 @@
 {
   "name": "csc-307-app",
   "version": "1.0.0",
-  "description": "Intro to Software Engineering App",
+  "description": "Intro to software engineering CSC-307",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm --prefix packages/react-frontend start"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "IE0"
-  }
+  "devDependencies": {}
 }
